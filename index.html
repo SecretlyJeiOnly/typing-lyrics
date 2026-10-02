@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Typing Lyrics</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .lyrics {
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 35px;
+            background: white;
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="lyrics">
+        <span id="text"></span><span class="cursor"></span>
+    </div>
+
+    <script>
+
+        // ==========================
+        // PUT YOUR LYRICS HERE
+        // ==========================
+
+        const lyrics = [
+            {
+                text: "Your first lyric goes here",
+                duration: 2500
+            },
+            {
+                text: "Your second lyric goes here",
+                duration: 3000
+            },
+            {
+                text: "Your third lyric goes here",
+                duration: 2500
+            },
+            {
+                text: "Your fourth lyric goes here",
+                duration: 3000
+            }
+        ];
+
+
+        // ==========================
+        // TYPING FUNCTION
+        // ==========================
+
+        const textElement = document.getElementById("text");
+
+        async function typeLine(text, duration) {
+
+            textElement.textContent = "";
+
+            const typingSpeed = duration / text.length;
+
+            for (let i = 0; i < text.length; i++) {
+
+                textElement.textContent += text[i];
+
+                await new Promise(resolve =>
+                    setTimeout(resolve, typingSpeed)
+                );
+            }
+
+            await new Promise(resolve =>
+                setTimeout(resolve, 500)
+            );
+        }
+
+
+        // ==========================
+        // START
+        // ==========================
+
+        async function startLyrics() {
+
+            for (const line of lyrics) {
+                await typeLine(line.text, line.duration);
+            }
+
+        }
+
+        startLyrics();
+
+    </script>
+
+</body>
+</html>
